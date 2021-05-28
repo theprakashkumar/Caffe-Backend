@@ -22,6 +22,14 @@ const ProductSchema = new Schema({
         type: Number,
         required: "Product's Price is Required"
     },
+    mrp: {
+        type: Number,
+        required: "Product's Price is Required"
+    },
+    discount: {
+        type: StaticRange,
+        default: "0%"
+    },
     rating: {
         type: Number,
         required: "Product's Rating is Required"
@@ -29,6 +37,10 @@ const ProductSchema = new Schema({
     inStock: {
         type: Boolean,
         required: "Product's Stock Status is Required"
+    },
+    fastDelivery: {
+        type: Boolean,
+        default: false
     }
 });
 
