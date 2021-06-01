@@ -14,7 +14,7 @@ const getProductById = async (req, res, next, id) => {
     } catch (err) {
         res.json({
             success: false,
-            message: "Could nou Fetch the Data",
+            message: "Couldn't Fetch the Data",
         });
     }
 };

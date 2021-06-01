@@ -1,11 +1,28 @@
 const Product = require("../models/product");
 
-const getAllProduct = async (req, res) => {
+const addNewProduct = async (req, res) => {
+    try {
+        const product = req.body;
+        const newProduct = new Product(product);
+        const savedProduct = await newProduct.save();
+        res.json({
+            success: true,
+            product: savedProduct,
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Unable to Add New Product",
+        });
+    }
+};
+
+const getAllProducts = async (req, res) => {
     try {
         const product = await Product.find();
         res.json({
-            product,
             success: true,
+            product,
         });
     } catch (err) {
         res.status(500).json({
@@ -15,7 +32,7 @@ const getAllProduct = async (req, res) => {
     }
 };
 
-const getProductDetails = async (res, res) => {
+const getProductDetails = async (req, res) => {
     try {
         const product = req.product;
         res.json({
@@ -31,6 +48,7 @@ const getProductDetails = async (res, res) => {
 };
 
 module.exports = {
-    getAllProduct,
-    findProductById,
+    addNewProduct,
+    getAllProducts,
+    getProductDetails,
 };

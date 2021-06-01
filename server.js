@@ -6,6 +6,7 @@ const productRouter = require("./routes/products.routes");
 
 // configuration
 const app = express();
+app.use(express.json());
 env.config();
 
 // connect to DB
