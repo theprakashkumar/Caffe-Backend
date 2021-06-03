@@ -3,6 +3,7 @@ const env = require("dotenv");
 
 const connect = require("./db/connect");
 const productRouter = require("./routes/products.routes");
+const userRouter = require("./routes/user.routes");
 
 // configuration
 const app = express();
@@ -18,8 +19,9 @@ app.get("/", function (req, res) {
 
 // routes
 app.use("/products", productRouter);
+app.use("/users", userRouter);
 
 // listen on port 5000
 app.listen(5000, function () {
-    console.log("Server Started Successfully 🙌");
+    console.log("Server Started 🙌");
 });

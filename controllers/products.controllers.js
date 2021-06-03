@@ -36,8 +36,8 @@ const getProductDetails = async (req, res) => {
     try {
         const product = req.product;
         res.json({
-            product,
             success: true,
+            product,
         });
     } catch (err) {
         res.status(500).json({

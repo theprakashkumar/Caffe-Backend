@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+// To Remove Error: DeprecationWarning: collection.ensureIndex is deprecated. Use createIndexes instead
+// mongoose.set('useCreateIndex', true);
+
 const UserSchema = new Schema({
     name: {
         type: String,
@@ -9,6 +12,7 @@ const UserSchema = new Schema({
     email: {
         type: String,
         required: "User Must Have Email",
+        unique: [true, "Email Already Exist"]
     },
     password: {
         type: String,
