@@ -32,7 +32,7 @@ const createNewUser = async (req, res) => {
         const newUser = new User(user);
         const createdUser = await newUser.save();
 
-        res.json({
+        res.status(200).json({
             success: true,
             user: createdUser,
         });
@@ -47,7 +47,7 @@ const createNewUser = async (req, res) => {
 const getUserDetails = async (req, res) => {
     try {
         const user = req.user;
-        res.json({
+        res.status(200).json({
             success: true,
             user,
         });
