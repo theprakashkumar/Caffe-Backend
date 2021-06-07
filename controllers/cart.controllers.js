@@ -11,7 +11,7 @@ const getCart = async (req, res) => {
     } catch (err) {
         res.status(400).json({
             success: false,
-            message: "Something Went Wrong While Accessing User's Cart",
+            message: "Something Went Wrong While Accessing User's Cart!",
             errorMessage: err.message,
         });
     }
@@ -34,7 +34,7 @@ const addItemToCart = async (req, res) => {
     } catch (err) {
         res.status(400).json({
             success: false,
-            message: "Something Went Wrong While Adding Item to Cart",
+            message: "Something Went Wrong While Adding Item to Cart!",
             errorMessage: err.message,
         });
     }
@@ -64,7 +64,7 @@ const updateCart = async (req, res) => {
     } catch (err) {
         res.status(400).json({
             success: false,
-            message: "Something Went Wrong While Updating Cart",
+            message: "Something Went Wrong While Updating Cart!",
             errorMessage: err.message,
         });
     }
@@ -86,7 +86,7 @@ const removeItemFromCart = async (req, res) => {
     } catch (err) {
         res.status(400).json({
             success: false,
-            message: "Something Went Wrong While Deleting Item From Cart",
+            message: "Something Went Wrong While Deleting Item From Cart!",
             errorMessage: err.message,
         });
     }

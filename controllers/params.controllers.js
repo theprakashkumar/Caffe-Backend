@@ -1,6 +1,7 @@
 const Product = require("../models/product");
 const User = require("../models/user");
 const Cart = require("../models/cart");
+const Wishlist = require("../models/wishlist");
 
 const getProductById = async (req, res, next, id) => {
     try {
@@ -55,9 +56,28 @@ const getOrCreateCartByUserId = async (req, res, next, id) => {
         req.cart = cart;
         next();
     } catch (err) {
-        res.status(500).json({
+        res.status(400).json({
             success: false,
-            message: "Some Went Wrong While Accessing or Creating Cart!",
+            message: "Something Went Wrong While Accessing or Creating Cart!",
+            errorMessage: err.message,
+        });
+    }
+};
+
+const getOrCreateWishlistByUserId = async (req, res, next, id) => {
+    try {
+        let wishlist = await Wishlist.findOne({ user: id});
+        if (!wishlist) {
+            newWishlist = new Wishlist({ user: id, product: [] });
+            wishlist = await newWishlist.save();
+        }
+        req.wishlist = wishlist;
+        next();
+    } catch (err) {
+        res.status(400).json({
+            success: false,
+            message:
+                "Something Went Wrong While Accessing or Creating Wishlist!",
             errorMessage: err.message,
         });
     }
@@ -67,4 +87,5 @@ module.exports = {
     getProductById,
     getUserById,
     getOrCreateCartByUserId,
+    getOrCreateWishlistByUserId,
 };

@@ -5,6 +5,7 @@ const connect = require("./db/connect");
 const productRouter = require("./routes/products.routes");
 const userRouter = require("./routes/user.routes");
 const cartRouter = require("./routes/cart.routes");
+const wishlistRouter = require("./routes/wishlist.routes");
 
 // configuration
 const app = express();
@@ -22,7 +23,7 @@ app.get("/", function (req, res) {
 app.use("/products", productRouter);
 app.use("/users", userRouter);
 app.use("/cart", cartRouter);
-
+app.use("/wishlist", wishlistRouter);
 
 // listen on port 5000
 app.listen(5000, function () {
