@@ -18,14 +18,13 @@ const getCart = async (req, res) => {
 };
 
 const addItemToCart = async (req, res) => {
-    let cart = req.cart;
-    const product = req.body;
-
-    cart.cartItems.push({
-        product: product._id,
-    });
-
     try {
+        let cart = req.cart;
+        const product = req.body;
+
+        cart.cartItems.push({
+            product: product._id,
+        });
         const updatedCart = await cart.save();
         res.status(200).json({
             success: true,
@@ -41,21 +40,17 @@ const addItemToCart = async (req, res) => {
 };
 
 const updateCart = async (req, res) => {
-    let cart = req.cart;
-    const productUpdates = req.body;
-
-    // console.log(typeof(cart.cartItems[0].product));
-    // console.log(typeof(productUpdates._id));
-
-    cart.cartItems.map((item) => {
-        // ! HAVE TO CONVERT INTO STRING
-        if (item.product.toString() === productUpdates._id) {
-            console.log("true");
-            return extend(item, { quantity: productUpdates.quantity });
-        }
-    });
-
     try {
+        let cart = req.cart;
+        const productUpdates = req.body;
+
+        cart.cartItems.map((item) => {
+            // ! HAVE TO CONVERT INTO STRING
+            if (item.product.toString() === productUpdates._id) {
+                console.log("true");
+                return extend(item, { quantity: productUpdates.quantity });
+            }
+        });
         const updatedCart = await cart.save();
         res.status(200).json({
             success: true,
@@ -71,13 +66,13 @@ const updateCart = async (req, res) => {
 };
 
 const removeItemFromCart = async (req, res) => {
-    let cart = req.cart;
-    const product = req.body;
-
-    cart.cartItems = cart.cartItems.filter(
-        (item) => item.product.toString() !== product._id
-    );
     try {
+        let cart = req.cart;
+        const product = req.body;
+
+        cart.cartItems = cart.cartItems.filter(
+            (item) => item.product.toString() !== product._id
+        );
         const updatedCart = await cart.save();
         res.status(200).json({
             success: true,

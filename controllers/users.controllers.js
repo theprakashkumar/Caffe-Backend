@@ -1,8 +1,8 @@
 const User = require("../models/user");
 
 const getUserLogin = async (req, res) => {
-    const { email, password } = req.body;
     try {
+        const { email, password } = req.body;
         let user = await User.find({
             email,
             password,

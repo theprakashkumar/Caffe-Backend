@@ -66,7 +66,7 @@ const getOrCreateCartByUserId = async (req, res, next, id) => {
 
 const getOrCreateWishlistByUserId = async (req, res, next, id) => {
     try {
-        let wishlist = await Wishlist.findOne({ user: id});
+        let wishlist = await Wishlist.findOne({ user: id });
         if (!wishlist) {
             newWishlist = new Wishlist({ user: id, product: [] });
             wishlist = await newWishlist.save();
