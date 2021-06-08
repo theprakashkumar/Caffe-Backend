@@ -7,12 +7,13 @@ const addNewProduct = async (req, res) => {
         const savedProduct = await newProduct.save();
         res.json({
             success: true,
-            product: savedProduct,
+            savedProduct,
         });
     } catch (err) {
         res.status(500).json({
             success: false,
             message: "Unable to Add New Product",
+            errorMessage: err.message,
         });
     }
 };
@@ -28,6 +29,7 @@ const getAllProducts = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Unable to Fetch Product List From Server",
+            errorMessage: err.message,
         });
     }
 };
@@ -43,6 +45,7 @@ const getProductDetails = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Product Not Found With Given Id",
+            errorMessage: err.message,
         });
     }
 };
