@@ -1,5 +1,6 @@
 const express = require("express");
 const env = require("dotenv");
+var cors = require("cors");
 
 const connect = require("./db/connect");
 const productRouter = require("./routes/products.routes");
@@ -11,6 +12,7 @@ const wishlistRouter = require("./routes/wishlist.routes");
 const app = express();
 app.use(express.json());
 env.config();
+app.use(cors())
 
 // connect to DB
 connect();
