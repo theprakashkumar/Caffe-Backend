@@ -1,22 +1,41 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const getUserLogin = async (req, res) => {
+    console.log("login request!");
     try {
         const { email, password } = req.body;
-        let user = await User.find({
-            email,
-            password,
-        });
-        if (!user) {
+        console.log(email, password);
+        let user = await User.findOne({ email });
+        if (user) {
+            console.log(user);
+            const validPassword = await bcrypt.compare(password, user.password);
+            if (validPassword) {
+                console.log(validPassword);
+                const token = jwt.sign(
+                    { userId: user._id },
+                    process.env.SECRET,
+                    { expiresIn: "1h" }
+                );
+                console.log(token);
+                return res.status(200).json({
+                    success: true,
+                    name: user.name,
+                    email: user.email,
+                    token,
+                });
+            }
+            console.log("user password");
             res.status(200).json({
                 success: false,
                 message: "Wrong Credential",
             });
         } else {
-            res.status(200).json({
+            console.log("user not found");
+            res.status(401).json({
                 success: true,
-                data: user,
+                message: "User Not Found!",
             });
         }
     } catch (err) {
@@ -32,7 +51,7 @@ const createNewUser = async (req, res) => {
         const body = req.body;
         const userFound = await User.findOne({ email: body.email });
         if (userFound) {
-            res.status(409).json({
+            return res.status(409).json({
                 success: true,
                 error: "User Already Exists With the Email!",
             });
