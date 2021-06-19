@@ -18,7 +18,7 @@ app.use(cors())
 connect();
 
 app.get("/", function (req, res) {
-    res.send("What");
+    res.send("Welcome to Cafe-Backend 😊");
 });
 
 // routes
