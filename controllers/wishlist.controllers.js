@@ -1,6 +1,3 @@
-const Wishlist = require("../models/wishlist");
-
-// ? should this be async function as we already got the wishlist using params
 const getWishlist = async (req, res) => {
     try {
         const wishlist = req.wishlist;

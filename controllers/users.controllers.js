@@ -23,7 +23,7 @@ const getUserLogin = async (req, res) => {
                     success: true,
                     name: user.name,
                     email: user.email,
-                    token,
+                    token: token,
                 });
             }
             console.log("user password");

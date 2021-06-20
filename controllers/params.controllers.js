@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const Product = require("../models/product");
 const User = require("../models/user");
 const Cart = require("../models/cart");
@@ -23,6 +24,7 @@ const getProductById = async (req, res, next, id) => {
     }
 };
 
+// ! IMPLEMENT TOKEN HERE!
 const getUserById = async (req, res, next, id) => {
     try {
         const user = await User.findById(id);
@@ -68,7 +70,7 @@ const getOrCreateWishlistByUserId = async (req, res, next, id) => {
     try {
         let wishlist = await Wishlist.findOne({ user: id });
         if (!wishlist) {
-            newWishlist = new Wishlist({ user: id, product: [] });
+            const newWishlist = new Wishlist({ user: id, product: [] });
             wishlist = await newWishlist.save();
         }
         req.wishlist = wishlist;
@@ -89,3 +91,26 @@ module.exports = {
     getOrCreateCartByUserId,
     getOrCreateWishlistByUserId,
 };
+
+
+// const getOrCreateWishlistByUserId = async (req, res, next, id) => {
+//     try {
+//         const { token } = req.body;
+//         const decoded = jwt.verify(token, process.env.SECRET);
+//         const userId = decoded.userId;
+//         let wishlist = await Wishlist.findOne({ user: userId });
+//         if (!wishlist) {
+//             const newWishlist = new Wishlist({ user: id, product: [] });
+//             wishlist = await newWishlist.save();
+//         }
+//         req.wishlist = wishlist;
+//         next();
+//     } catch (err) {
+//         res.status(400).json({
+//             success: false,
+//             message:
+//                 "Something Went Wrong While Accessing or Creating Wishlist!",
+//             errorMessage: err.message,
+//         });
+//     }
+// };
