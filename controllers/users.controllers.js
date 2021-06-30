@@ -3,22 +3,17 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const getUserLogin = async (req, res) => {
-    console.log("login request!");
     try {
         const { email, password } = req.body;
-        console.log(email, password);
         let user = await User.findOne({ email });
         if (user) {
-            console.log(user);
             const validPassword = await bcrypt.compare(password, user.password);
             if (validPassword) {
-                console.log(validPassword);
                 const token = jwt.sign(
                     { userId: user._id },
                     process.env.SECRET,
                     { expiresIn: "1h" }
                 );
-                console.log(token);
                 return res.status(200).json({
                     success: true,
                     name: user.name,
@@ -26,13 +21,11 @@ const getUserLogin = async (req, res) => {
                     token: token,
                 });
             }
-            console.log("user password");
             res.status(200).json({
                 success: false,
                 message: "Wrong Credential",
             });
         } else {
-            console.log("user not found");
             res.status(401).json({
                 success: true,
                 message: "User Not Found!",

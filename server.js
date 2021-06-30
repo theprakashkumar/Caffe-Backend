@@ -3,6 +3,7 @@ const env = require("dotenv");
 var cors = require("cors");
 
 const connect = require("./db/connect");
+const authenticate = require("./middleware/authenticate");
 const productRouter = require("./routes/products.routes");
 const userRouter = require("./routes/user.routes");
 const cartRouter = require("./routes/cart.routes");
@@ -24,8 +25,8 @@ app.get("/", function (req, res) {
 // routes
 app.use("/products", productRouter);
 app.use("/users", userRouter);
-app.use("/cart", cartRouter);
-app.use("/wishlist", wishlistRouter);
+app.use("/cart", authenticate, cartRouter);
+app.use("/wishlist", authenticate, wishlistRouter);
 
 // listen on port 5000
 app.listen(process.env.PORT || 5000, function () {

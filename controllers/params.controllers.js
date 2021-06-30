@@ -68,13 +68,17 @@ const getOrCreateCartByUserId = async (req, res, next, id) => {
 
 const getOrCreateWishlistByUserId = async (req, res, next, id) => {
     try {
-        let wishlist = await Wishlist.findOne({ user: id });
-        if (!wishlist) {
-            const newWishlist = new Wishlist({ user: id, product: [] });
-            wishlist = await newWishlist.save();
+        const userId = req.userId;
+        // can't run router.param without argument so have to run with userId
+        if (userId === id) {
+            let wishlist = await Wishlist.findOne({ user: userId });
+            if (!wishlist) {
+                const newWishlist = new Wishlist({ user: id, product: [] });
+                wishlist = await newWishlist.save();
+            }
+            req.wishlist = wishlist;
+            next();
         }
-        req.wishlist = wishlist;
-        next();
     } catch (err) {
         res.status(400).json({
             success: false,
@@ -92,7 +96,7 @@ module.exports = {
     getOrCreateWishlistByUserId,
 };
 
-
+// VERIFYING TOKEN EVERY TIME WE GET REQUEST MANUALLY
 // const getOrCreateWishlistByUserId = async (req, res, next, id) => {
 //     try {
 //         const { token } = req.body;
