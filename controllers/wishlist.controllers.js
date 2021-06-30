@@ -1,4 +1,3 @@
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGNlZTFjYzA1Mzc4MzAwYjBhZmIzMzUiLCJpYXQiOjE2MjQzNDgzOTEsImV4cCI6MTYyNDM1MTk5MX0.95nn8wmyNiilww9d2go-93jtzBz8uxAGMz4tyKKid7Q
 const getWishlist = async (req, res) => {
     try {
         const wishlist = req.wishlist;

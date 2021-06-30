@@ -48,15 +48,20 @@ const getUserById = async (req, res, next, id) => {
 
 const getOrCreateCartByUserId = async (req, res, next, id) => {
     try {
-        // try to find the cart
-        let cart = await Cart.findOne({ user: id });
-        // if cart not found the create one;
-        if (!cart) {
-            newCart = new Cart({ user: id, product: [] });
-            cart = await newCart.save();
+        // got userId from token
+        const userId = req.userId;
+        // can't run router.param without argument so have to run with userId
+        if (userId === id) {
+            // try to find the cart
+            let cart = await Cart.findOne({ user: id });
+            // if cart not found the create one;
+            if (!cart) {
+                newCart = new Cart({ user: id, product: [] });
+                cart = await newCart.save();
+            }
+            req.cart = cart;
+            next();
         }
-        req.cart = cart;
-        next();
     } catch (err) {
         res.status(400).json({
             success: false,
@@ -69,7 +74,6 @@ const getOrCreateCartByUserId = async (req, res, next, id) => {
 const getOrCreateWishlistByUserId = async (req, res, next, id) => {
     try {
         const userId = req.userId;
-        // can't run router.param without argument so have to run with userId
         if (userId === id) {
             let wishlist = await Wishlist.findOne({ user: userId });
             if (!wishlist) {
