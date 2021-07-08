@@ -12,10 +12,11 @@ const getUserLogin = async (req, res) => {
                 const token = jwt.sign(
                     { userId: user._id },
                     process.env.SECRET,
-                    { expiresIn: "1h" }
+                    { expiresIn: "30 days" }
                 );
                 return res.status(200).json({
                     success: true,
+                    id: user.id,
                     name: user.name,
                     email: user.email,
                     token: token,

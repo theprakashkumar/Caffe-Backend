@@ -1,3 +1,5 @@
+const Wishlist = require("../models/wishlist");
+
 const getWishlist = async (req, res) => {
     try {
         const wishlist = req.wishlist;
@@ -39,14 +41,19 @@ const removeItemFromWishlist = async (req, res) => {
     try {
         let wishlist = req.wishlist;
         const product = req.body;
+        // console.log(product);
 
+        // THIS IS WORKING
         wishlist.wishlistItems = wishlist.wishlistItems.filter(
-            (item) => item.product.toString() !== product._id
+            (item) => {
+                console.log("From Wihslit.Wishlit", item.product.id, product._id);
+                return item.product.id !== product._id
+            }
         );
         const updatedWishlist = await wishlist.save();
         res.status(200).json({
             success: true,
-            updatedWishlist,
+            wishlist,
         });
     } catch (err) {
         res.status(400).json({
