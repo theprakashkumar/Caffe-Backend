@@ -29,6 +29,6 @@ app.use("/cart", authenticate, cartRouter);
 app.use("/wishlist", authenticate, wishlistRouter);
 
 // listen on port 5000
-app.listen(process.env.PORT || 5000, function () {
+app.listen(process.env.PORT || 8080, function () {
     console.log("Server Started 🙌");
 });

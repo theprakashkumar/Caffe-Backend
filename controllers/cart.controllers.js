@@ -47,7 +47,6 @@ const updateCart = async (req, res) => {
         cart.cartItems.map((item) => {
             // ! HAVE TO CONVERT INTO STRING
             if (item.product.toString() === productUpdates._id) {
-                console.log("true");
                 return extend(item, { quantity: productUpdates.quantity });
             }
         });
@@ -69,9 +68,10 @@ const removeItemFromCart = async (req, res) => {
     try {
         let cart = req.cart;
         const product = req.body;
-
         cart.cartItems = cart.cartItems.filter(
-            (item) => item.product.toString() !== product._id
+            (item) => {
+                return item.product._id.toString() !== product._id
+            }
         );
         const updatedCart = await cart.save();
         res.status(200).json({
