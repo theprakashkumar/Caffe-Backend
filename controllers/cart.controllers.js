@@ -43,13 +43,17 @@ const updateCart = async (req, res) => {
     try {
         let cart = req.cart;
         const productUpdates = req.body;
-
-        cart.cartItems.map((item) => {
-            // ! HAVE TO CONVERT INTO STRING
-            if (item.product.toString() === productUpdates._id) {
-                return extend(item, { quantity: productUpdates.quantity });
-            }
-        });
+        if (productUpdates.quantity === 0) {
+            cart.cartItems = cart.cartItems.filter(
+                (item) => item._id.toString() !== productUpdates._id.toString()
+            );
+        } else {
+            cart.cartItems.map((item) => {
+                if (item._id.toString() === productUpdates._id) {
+                    return extend(item, { quantity: productUpdates.quantity });
+                }
+            });
+        }
         const updatedCart = await cart.save();
         res.status(200).json({
             success: true,
@@ -68,11 +72,9 @@ const removeItemFromCart = async (req, res) => {
     try {
         let cart = req.cart;
         const product = req.body;
-        cart.cartItems = cart.cartItems.filter(
-            (item) => {
-                return item.product._id.toString() !== product._id
-            }
-        );
+        cart.cartItems = cart.cartItems.filter((item) => {
+            return item.product._id.toString() !== product._id;
+        });
         const updatedCart = await cart.save();
         res.status(200).json({
             success: true,
