@@ -71,13 +71,14 @@ const moveItemToCart = async (req, res) => {
         const product = req.body;
 
         const itemAlreadyInCart = cart.cartItems.find(
-            (item) => item.product.toString() !== product._id
+            (item) => item.product._id.toString() === product._id
         );
 
         if (itemAlreadyInCart) {
-            wishlist = wishlist.wishlistItems.filter(
-                (item) => item.product.toString() !== product._id
+            wishlist.wishlistItems = wishlist.wishlistItems.filter(
+                (item) => item.product._id.toString() !== product._id
             );
+            console.log("item removed")
         } else {
             cart.cartItems.push({
                 product: product._id,
@@ -96,6 +97,7 @@ const moveItemToCart = async (req, res) => {
             updatedWishlist,
         });
     } catch (err) {
+        console.log(err);
         res.status(400).json({
             success: false,
             message:
