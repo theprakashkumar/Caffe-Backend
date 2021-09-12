@@ -34,6 +34,8 @@ const ProductSchema = new Schema({
         type: Number,
         required: "Product's Rating is Required",
     },
+    ratings: Number,
+    reviews: Number,
     inStock: {
         type: Boolean,
         required: "Product's Stock Status is Required",
@@ -42,6 +44,7 @@ const ProductSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    tastingNodes: String,
 });
 
 const Product = mongoose.model("Product", ProductSchema);
