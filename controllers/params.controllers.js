@@ -16,7 +16,7 @@ const getProductById = async (req, res, next, id) => {
         req.product = product;
         next();
     } catch (err) {
-        res.json({
+        res.status(400).json({
             success: false,
             message: "Couldn't Fetch the Product Data",
             errorMessage: err.message,
@@ -53,7 +53,9 @@ const getOrCreateCartByUserId = async (req, res, next, id) => {
         // can't run router.param without argument so have to run with userId
         if (userId === id) {
             // try to find the cart
-            let cart = await Cart.findOne({ user: id }).populate("cartItems.product");
+            let cart = await Cart.findOne({ user: id }).populate(
+                "cartItems.product"
+            );
             // if cart not found the create one;
             if (!cart) {
                 newCart = new Cart({ user: id, product: [] });
@@ -76,7 +78,9 @@ const getOrCreateWishlistByUserId = async (req, res, next, id) => {
         // userId is extracted from token
         const userId = req.userId;
         if (userId === id) {
-            let wishlist = await Wishlist.findOne({ user: userId }).populate("wishlistItems.product");
+            let wishlist = await Wishlist.findOne({ user: userId }).populate(
+                "wishlistItems.product"
+            );
             if (!wishlist) {
                 const newWishlist = new Wishlist({ user: id, product: [] });
                 wishlist = await newWishlist.save();
