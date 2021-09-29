@@ -22,13 +22,13 @@ const getUserLogin = async (req, res) => {
                     token: token,
                 });
             }
-            res.status(200).json({
+            res.status(403).json({
                 success: false,
                 message: "Wrong Credential",
             });
         } else {
             res.status(401).json({
-                success: true,
+                success: false,
                 message: "User Not Found!",
             });
         }
