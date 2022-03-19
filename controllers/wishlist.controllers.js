@@ -78,13 +78,12 @@ const moveItemToCart = async (req, res) => {
             wishlist.wishlistItems = wishlist.wishlistItems.filter(
                 (item) => item.product._id.toString() !== product._id
             );
-            console.log("item removed")
         } else {
             cart.cartItems.push({
                 product: product._id,
             });
             wishlist.wishlistItems = wishlist.wishlistItems.filter(
-                (item) => item._id.toString() === product._id
+                (item) => item.product._id.toString() === product._id
             );
         }
 
