@@ -41,15 +41,10 @@ const removeItemFromWishlist = async (req, res) => {
     try {
         let wishlist = req.wishlist;
         const product = req.body;
-        // console.log(product);
 
-        // THIS IS WORKING
-        wishlist.wishlistItems = wishlist.wishlistItems.filter(
-            (item) => {
-                console.log("From Wihslit.Wishlit", item.product.id, product._id);
-                return item.product.id !== product._id
-            }
-        );
+        wishlist.wishlistItems = wishlist.wishlistItems.filter((item) => {
+            return item.product.id !== product._id;
+        });
         const updatedWishlist = await wishlist.save();
         res.status(200).json({
             success: true,
