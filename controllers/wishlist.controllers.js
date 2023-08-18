@@ -48,7 +48,7 @@ const removeItemFromWishlist = async (req, res) => {
         const updatedWishlist = await wishlist.save();
         res.status(200).json({
             success: true,
-            wishlist,
+            updatedWishlist,
         });
     } catch (err) {
         res.status(400).json({
