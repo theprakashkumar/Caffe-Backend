@@ -1,0 +1,67 @@
+{
+    "first": {
+        "fastDelivery": false,
+        "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur esse placeat saepe fugiat recusandae est perspiciatis, sit temporibus velit, error eius, nam quaerat eos magnam suscipit accusantium asperiores veritatis ad.",
+        "id": "30dd35ef-7196-4c58-b4f3-c1abd732ce14",
+        "image": "http://placeimg.com/640/480/cats",
+        "inStock": true,
+        "name": "Intelligent Cotton Computer",
+        "price": 878,
+        "category": "expressso",
+        "discount": "10%",
+        "mrp": 1000,
+        "rating": 3
+    },
+    "second": {
+        "fastDelivery": true,
+        "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur esse placeat saepe fugiat recusandae est perspiciatis, sit temporibus velit, error eius, nam quaerat eos magnam suscipit accusantium asperiores veritatis ad.",
+        "id": "14d5d2e2-ff8f-413f-873a-bdc909950b8d",
+        "image": "http://placeimg.com/640/480/abstract",
+        "inStock": true,
+        "name": "Generic Frozen Chips",
+        "price": 260,
+        "category": "eqi",
+        "discount": "10%",
+        "mrp": 1000,
+        "rating": 1
+    },
+    "third": {
+        "fastDelivery": true,
+        "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur esse placeat saepe fugiat recusandae est perspiciatis, sit temporibus velit, error eius, nam quaerat eos magnam suscipit accusantium asperiores veritatis ad.",
+        "id": "79f162d5-89c3-4710-a141-740f4a3df96a",
+        "image": "http://placeimg.com/640/480/transport",
+        "inStock": true,
+        "name": "Fantastic Soft Gloves",
+        "price": 196,
+        "category": "eqi",
+        "discount": "10%",
+        "mrp": 1000,
+        "rating": 1
+    },
+    "fourth": {
+        "fastDelivery": true,
+        "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur esse placeat saepe fugiat recusandae est perspiciatis, sit temporibus velit, error eius, nam quaerat eos magnam suscipit accusantium asperiores veritatis ad.",
+        "id": "983c20d3-d5a3-42c2-95af-739efef11cdf",
+        "image": "http://placeimg.com/640/480/nightlife",
+        "inStock": false,
+        "name": "Incredible Plastic Computer",
+        "price": 384,
+        "category": "eqi",
+        "discount": "10%",
+        "mrp": 1000,
+        "rating": 1
+    },
+    "fifth": {
+        "fastDelivery": true,
+        "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur esse placeat saepe fugiat recusandae est perspiciatis, sit temporibus velit, error eius, nam quaerat eos magnam suscipit accusantium asperiores veritatis ad.",
+        "id": "d1157bdc-877f-4c80-b906-3fcca0b3f79b",
+        "image": "http://placeimg.com/640/480/city",
+        "inStock": true,
+        "name": "Sleek Plastic Bike",
+        "price": 575,
+        "category": "eqi",
+        "discount": "10%",
+        "mrp": 1000,
+        "rating": 3
+    }
+}
