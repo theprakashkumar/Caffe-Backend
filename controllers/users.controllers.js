@@ -57,9 +57,17 @@ const createNewUser = async (req, res) => {
         newUser.password = hashPassword;
         const createdUser = await newUser.save();
 
-        res.status(200).json({
+        const token = jwt.sign(
+            { userId: createdUser._id },
+            process.env.SECRET,
+            { expiresIn: "30 days" }
+        );
+        return res.status(200).json({
             success: true,
-            user: createdUser,
+            id: createdUser.id,
+            name: createdUser.name,
+            email: createdUser.email,
+            token,
         });
     } catch (err) {
         res.status(500).json({
