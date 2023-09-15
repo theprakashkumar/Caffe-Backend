@@ -14,7 +14,7 @@ const authenticate = (req, res, next) => {
     if (decoded) {
         req.userId = decoded.userId;
         next();
-    // if password is not valid
+        // if password is not valid
     } else {
         return res.status(401).json({
             success: true,

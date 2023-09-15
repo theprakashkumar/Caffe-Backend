@@ -3,6 +3,7 @@ const Product = require("../models/product");
 const User = require("../models/user");
 const Cart = require("../models/cart");
 const Wishlist = require("../models/wishlist");
+const Address = require("../models/address");
 
 const getProductById = async (req, res, next, id) => {
     try {
@@ -58,7 +59,7 @@ const getOrCreateCartByUserId = async (req, res, next, id) => {
             );
             // if cart not found the create one;
             if (!cart) {
-                newCart = new Cart({ user: id, product: [] });
+                const newCart = new Cart({ user: id, product: [] });
                 cart = await newCart.save();
             }
             req.cart = cart;
@@ -98,11 +99,33 @@ const getOrCreateWishlistByUserId = async (req, res, next, id) => {
     }
 };
 
+const getOrCreateAddressByUserId = async (req, res, next, id) => {
+    try {
+        const userId = req.userId;
+        if (userId === id) {
+            let addresses = await Address.findOne({ user: userId }).populate(
+                "addresses"
+            );
+
+            if (!addresses) {
+                const newAddress = new Address({
+                    user: id,
+                    addresses: [],
+                });
+                addresses = await newAddress.save();
+            }
+            req.addresses = addresses;
+            next();
+        }
+    } catch (error) {}
+};
+
 module.exports = {
     getProductById,
     getUserById,
     getOrCreateCartByUserId,
     getOrCreateWishlistByUserId,
+    getOrCreateAddressByUserId,
 };
 
 // VERIFYING TOKEN EVERY TIME WE GET REQUEST MANUALLY
