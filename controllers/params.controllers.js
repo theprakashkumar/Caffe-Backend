@@ -25,7 +25,6 @@ const getProductById = async (req, res, next, id) => {
     }
 };
 
-// ! IMPLEMENT TOKEN HERE!
 const getUserById = async (req, res, next, id) => {
     try {
         const user = await User.findById(id);
@@ -49,7 +48,6 @@ const getUserById = async (req, res, next, id) => {
 
 const getOrCreateCartByUserId = async (req, res, next, id) => {
     try {
-        // got userId from token
         const userId = req.userId;
         // can't run router.param without argument so have to run with userId
         if (userId === id) {
@@ -76,7 +74,6 @@ const getOrCreateCartByUserId = async (req, res, next, id) => {
 
 const getOrCreateWishlistByUserId = async (req, res, next, id) => {
     try {
-        // userId is extracted from token
         const userId = req.userId;
         if (userId === id) {
             let wishlist = await Wishlist.findOne({ user: userId }).populate(
@@ -127,26 +124,3 @@ module.exports = {
     getOrCreateWishlistByUserId,
     getOrCreateAddressByUserId,
 };
-
-// VERIFYING TOKEN EVERY TIME WE GET REQUEST MANUALLY
-// const getOrCreateWishlistByUserId = async (req, res, next, id) => {
-//     try {
-//         const { token } = req.body;
-//         const decoded = jwt.verify(token, process.env.SECRET);
-//         const userId = decoded.userId;
-//         let wishlist = await Wishlist.findOne({ user: userId });
-//         if (!wishlist) {
-//             const newWishlist = new Wishlist({ user: id, product: [] });
-//             wishlist = await newWishlist.save();
-//         }
-//         req.wishlist = wishlist;
-//         next();
-//     } catch (err) {
-//         res.status(400).json({
-//             success: false,
-//             message:
-//                 "Something Went Wrong While Accessing or Creating Wishlist!",
-//             errorMessage: err.message,
-//         });
-//     }
-// };
