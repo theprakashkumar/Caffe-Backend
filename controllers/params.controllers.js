@@ -3,6 +3,7 @@ const Product = require("../models/product");
 const User = require("../models/user");
 const Cart = require("../models/cart");
 const Wishlist = require("../models/wishlist");
+const Address = require("../models/address");
 
 const getProductById = async (req, res, next, id) => {
     try {
@@ -24,7 +25,6 @@ const getProductById = async (req, res, next, id) => {
     }
 };
 
-// ! IMPLEMENT TOKEN HERE!
 const getUserById = async (req, res, next, id) => {
     try {
         const user = await User.findById(id);
@@ -48,7 +48,6 @@ const getUserById = async (req, res, next, id) => {
 
 const getOrCreateCartByUserId = async (req, res, next, id) => {
     try {
-        // got userId from token
         const userId = req.userId;
         // can't run router.param without argument so have to run with userId
         if (userId === id) {
@@ -58,7 +57,7 @@ const getOrCreateCartByUserId = async (req, res, next, id) => {
             );
             // if cart not found the create one;
             if (!cart) {
-                newCart = new Cart({ user: id, product: [] });
+                const newCart = new Cart({ user: id, product: [] });
                 cart = await newCart.save();
             }
             req.cart = cart;
@@ -75,7 +74,6 @@ const getOrCreateCartByUserId = async (req, res, next, id) => {
 
 const getOrCreateWishlistByUserId = async (req, res, next, id) => {
     try {
-        // userId is extracted from token
         const userId = req.userId;
         if (userId === id) {
             let wishlist = await Wishlist.findOne({ user: userId }).populate(
@@ -98,32 +96,31 @@ const getOrCreateWishlistByUserId = async (req, res, next, id) => {
     }
 };
 
+const getOrCreateAddressByUserId = async (req, res, next, id) => {
+    try {
+        const userId = req.userId;
+        if (userId === id) {
+            let addresses = await Address.findOne({ user: userId }).populate(
+                "addresses"
+            );
+
+            if (!addresses) {
+                const newAddress = new Address({
+                    user: id,
+                    addresses: [],
+                });
+                addresses = await newAddress.save();
+            }
+            req.addresses = addresses;
+            next();
+        }
+    } catch (error) {}
+};
+
 module.exports = {
     getProductById,
     getUserById,
     getOrCreateCartByUserId,
     getOrCreateWishlistByUserId,
+    getOrCreateAddressByUserId,
 };
-
-// VERIFYING TOKEN EVERY TIME WE GET REQUEST MANUALLY
-// const getOrCreateWishlistByUserId = async (req, res, next, id) => {
-//     try {
-//         const { token } = req.body;
-//         const decoded = jwt.verify(token, process.env.SECRET);
-//         const userId = decoded.userId;
-//         let wishlist = await Wishlist.findOne({ user: userId });
-//         if (!wishlist) {
-//             const newWishlist = new Wishlist({ user: id, product: [] });
-//             wishlist = await newWishlist.save();
-//         }
-//         req.wishlist = wishlist;
-//         next();
-//     } catch (err) {
-//         res.status(400).json({
-//             success: false,
-//             message:
-//                 "Something Went Wrong While Accessing or Creating Wishlist!",
-//             errorMessage: err.message,
-//         });
-//     }
-// };
