@@ -14,6 +14,25 @@ const razorpayInstance = new Razorpay({
     key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
+const gerOrders = async (req, res) => {
+    try {
+        const user = req.params.user;
+
+        const order = await Order.find({ user })
+            .populate("items.product")
+            .sort({ time: -1 });
+
+        return res.status(200).json({ success: true, order });
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            success: false,
+            message: "Couldn't Fetch Orders!",
+            errorMessage: error.message,
+        });
+    }
+};
+
 // create order on razorpay
 const createOrder = async (req, res) => {
     const { amount } = req.body;
@@ -40,8 +59,15 @@ const placeOrder = async (req, res) => {
     try {
         // verify payment
         const user = req.params.user;
-        const { paymentId, orderId, signature, address, items, totalPrice } =
-            req.body;
+        const {
+            paymentId,
+            orderId,
+            signature,
+            address,
+            mobile,
+            items,
+            totalPrice,
+        } = req.body;
 
         const isPaymentValid = validatePaymentVerification(
             { order_id: orderId, payment_id: paymentId },
@@ -57,6 +83,7 @@ const placeOrder = async (req, res) => {
                 orderId,
                 signature,
                 address,
+                mobile,
                 items: items.map((item) => ({
                     product: item.product,
                     mrp: item.mrp,
@@ -88,4 +115,4 @@ const placeOrder = async (req, res) => {
     }
 };
 
-module.exports = { createOrder, placeOrder };
+module.exports = { createOrder, placeOrder, gerOrders };

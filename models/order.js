@@ -23,6 +23,10 @@ const OrderSchema = new Schema({
         type: String,
         required: true,
     },
+    mobile: {
+        type: Number,
+        required: true,
+    },
     items: [
         {
             product: { type: Schema.Types.ObjectId, ref: "Product" },
@@ -33,6 +37,10 @@ const OrderSchema = new Schema({
     totalPrice: {
         type: Number,
         required: true,
+    },
+    time: {
+        type: Date,
+        default: Date.now,
     },
 });
 
